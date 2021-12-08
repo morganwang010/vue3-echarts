@@ -22,6 +22,73 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
+    path: '/line2',
+    name: 'Line2',
+    meta: {
+      title: '关于我们'
+    },
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited. 懒加载
+    component: () => import(/* webpackChunkName: "about" */ '../views/Line2.vue')
+  },
+  {
+    path: '/line',
+    name: 'Line',
+    meta: {
+      title: '关于我们'
+    },
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited. 懒加载
+    component: () => import(/* webpackChunkName: "about" */ '../views/Line.vue')
+  },
+  {
+    path: '/pie',
+    name: 'Pie',
+    meta: {
+      title: '关于我们'
+    },
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited. 懒加载
+    component: () => import(/* webpackChunkName: "about" */ '../views/Pie.vue')
+  },
+  {
+    path: '/bar',
+    name: 'Bar',
+    meta: {
+      title: '关于我们'
+    },
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited. 懒加载
+    component: () => import(/* webpackChunkName: "about" */ '../views/Bar.vue')
+  },
+  {
+    path: '/area',
+    name: 'Area',
+    meta: {
+      title: '关于我们'
+    },
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited. 懒加载
+    component: () => import(/* webpackChunkName: "about" */ '../views/Area.vue')
+  },
+  {
+    path: '/line3',
+    name: 'Area',
+    meta: {
+      title: '关于我们'
+    },
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited. 懒加载
+    component: () => import(/* webpackChunkName: "about" */ '../views/LineRace.vue')
+  },
+   
+  {
     path: '/404',
     name: '404',
     meta: {
