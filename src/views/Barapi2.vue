@@ -1,0 +1,138 @@
+<template>
+  <div id="mycharts" ref="myRef" class="chart-box" />
+</template>
+<script lang="ts">
+import { defineComponent, getCurrentInstance, ref, onMounted } from 'vue';
+import axios from 'axios';
+import * as echarts from "echarts";
+export default defineComponent({
+  name: 'echarts',
+  setup() {
+    const { ctx } = getCurrentInstance();
+    const myRef = ref(null);
+
+const initT = () => {
+  const myChart = echarts.init(document.getElementById('mycharts'));
+  console.log(myChart);
+
+  var _rawData;
+    const getData = () => {
+       axios.get("https://cdn.jsdelivr.net/gh/apache/echarts-website@asf-site/examples/data/asset/data/life-expectancy-table.json").then((response) => {
+          
+          _rawData = response.data;
+          // console.log(_rawData);
+           
+    });
+    }
+    getData();
+    const countries = [
+    'Finland',
+    'France',
+    'Germany',
+    'Iceland',
+    'Norway',
+    'Poland',
+    'Russia',
+    'United Kingdom'
+    ];
+    const datasetWithFilters: echarts.DatasetComponentOption[] = [];
+    const seriesList: echarts.SeriesOption[] = [];
+    echarts.util.each(countries, function (country) {
+    var datasetId = 'dataset_' + country;
+    datasetWithFilters.push({
+      id: datasetId,
+      fromDatasetId: 'dataset_raw',
+      transform: {
+        type: 'filter',
+        config: {
+          and: [
+            { dimension: 'Year', gte: 1950 },
+            { dimension: 'Country', '=': country }
+          ]
+        }
+      }
+    });
+    
+    seriesList.push({
+      type: 'line',
+      datasetId: datasetId,
+      showSymbol: false,
+      name: country,
+      endLabel: {
+        show: true,
+        formatter: function (params: any) {
+          return params.value[3] + ': ' + params.value[0];
+        }
+      },
+      labelLayout: {
+        moveOverlap: 'shiftY'
+      },
+      emphasis: {
+        focus: 'series'
+      },
+      encode: {
+        x: 'Year',
+        y: 'Income',
+        label: ['Country', 'Income'],
+        itemName: 'Year',
+        tooltip: ['Income']
+      }
+    });
+   
+   });
+    console.log(seriesList);
+
+  myChart.setOption({
+    animationDuration: 10000,
+    
+    dataset: [
+      {
+        id: 'dataset_raw',
+        source: _rawData
+      },
+      ...datasetWithFilters
+    ],
+    title: {
+      text: 'Income of Germany and France since 1950'
+    },
+    tooltip: {
+      order: 'valueDesc',
+      trigger: 'axis'
+    },
+    xAxis: {
+      type: 'category',
+      nameLocation: 'middle'
+    },
+    yAxis: {
+      name: 'Income'
+    },
+    grid: {
+      right: 140
+    },
+    series: seriesList
+  });
+};
+
+onMounted(() => {
+  initT();
+});
+return {
+  myRef
+};
+  }
+});
+</script>
+
+<style lang="css" scoped>
+
+
+img{
+  width: 400px;
+  height: 400px;
+  background: red;
+}
+.chart-box{
+  width: 600px;
+  height: 600px;
+}
+</style>
